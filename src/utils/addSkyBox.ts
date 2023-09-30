@@ -22,7 +22,7 @@ export const addSkyBox = (scene: THREE.Scene) => {
       }),
     );
 
-  const skyGeometry = new THREE.BoxGeometry(2048, 2048, 2048);
+  const skyGeometry = new THREE.BoxGeometry(2048 / 10, 2048 / 10, 2048 / 10);
   const skyBox = new THREE.Mesh(skyGeometry, materialArray);
   skyBox.rotateY(-Math.PI / 2);
   scene.add(skyBox);

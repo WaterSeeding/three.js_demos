@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import TWEEN from '@tweenjs/tween.js';
+import Stats from 'three/addons/libs/stats.module.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { addSkyBox } from './addSkyBox';
 import { addComposer } from './addComposer';
@@ -9,6 +10,9 @@ export const initScene = (cb?: Function, updateCb?: Function): void => {
   const BLOOM_SCENE = 1;
   const bloomLayer = new THREE.Layers();
   bloomLayer.set(BLOOM_SCENE);
+
+  const stats = new Stats();
+  document.body.appendChild(stats.dom);
 
   const canvas = document.querySelector('canvas.webgl') as HTMLCanvasElement;
   const renderer = new THREE.WebGLRenderer({
@@ -28,10 +32,9 @@ export const initScene = (cb?: Function, updateCb?: Function): void => {
   const frustumSize = 45;
   const aspect = window.innerWidth / window.innerHeight;
   const camera = new THREE.PerspectiveCamera(frustumSize, aspect, 1, 10000);
-  camera.position.set(0, 150, 500);
+  camera.position.set(0, 150 / 13, 500 / 13);
   camera.lookAt(0, 0, 0);
   camera.updateProjectionMatrix();
-  camera.layers.enable(1);
 
   const earth = new THREE.Group();
   let controls: null | OrbitControls = null;
@@ -41,7 +44,7 @@ export const initScene = (cb?: Function, updateCb?: Function): void => {
   controls.enableDamping = true;
   controls.enableRotate = true;
   controls.enablePan = true;
-  controls.enableZoom = false;
+  controls.enableZoom = true;
   controls.maxPolarAngle = 1.5;
 
   window.addEventListener(
@@ -86,7 +89,7 @@ export const initScene = (cb?: Function, updateCb?: Function): void => {
   let planetNormalMap = textLoader.load('./earths/img/earth_normal.jpeg');
   let planetRoughnessMap = textLoader.load('./earths/img/earth_rough.jpeg');
   const planet = new THREE.Mesh(
-    new THREE.PlaneGeometry(2048, 1024),
+    new THREE.PlaneGeometry(2048 / 10, 1024 / 10),
     new THREE.MeshStandardMaterial({
       side: THREE.FrontSide,
       map: planetMap,
@@ -98,6 +101,7 @@ export const initScene = (cb?: Function, updateCb?: Function): void => {
   );
   earth.add(planet);
   earth.rotateX(-Math.PI / 2);
+  earth.position.setY(-15);
   scene.add(earth);
 
   const animate = () => {
@@ -108,17 +112,17 @@ export const initScene = (cb?: Function, updateCb?: Function): void => {
 
     renderer.autoClear = false;
     renderer.clear();
-    camera.layers.set(1);
     if (composer) {
       composer.render();
     }
     renderer.clearDepth();
-    camera.layers.set(0);
+    stats.update();
     renderer.render(scene, camera);
   };
   animate();
 
   cb?.({
+    scene,
     earth,
     camera,
     controls,
