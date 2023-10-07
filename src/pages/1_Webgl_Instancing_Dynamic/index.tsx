@@ -44,15 +44,18 @@ const Demo = () => {
           light: THREE.DirectionalLight;
           lightHelper: THREE.DirectionalLightHelper;
         }) => {
+          let gui = new GUI();
           sceneRef.current = scene;
           earthRef.current = earth;
           cameraRef.current = camera;
           controlsRef.current = controls;
+
+          addLight(scene, gui);
+
           dummyRef.current = new THREE.Object3D();
 
           addMesh(sceneRef.current, count).then((modelMesh) => {
             instancedMeshRef.current = modelMesh;
-            let gui = new GUI();
             gui.add(instancedMeshRef.current, 'count', 0, count);
 
             if (instancedMeshRef.current) {
@@ -96,6 +99,37 @@ const Demo = () => {
       );
     }
   }, []);
+
+  const addLight = (scene: THREE.Scene, gui: GUI) => {
+    const light = new THREE.DirectionalLight(0xffffff, 0.2);
+    light.position.set(-100, 100, 100);
+    light.castShadow = true;
+    light.shadow.camera.near = 0.5;
+    light.shadow.camera.far = 200;
+    light.shadow.camera.right = 150;
+    light.shadow.camera.left = -150;
+    light.shadow.camera.top = 150;
+    light.shadow.camera.bottom = -150;
+    light.shadow.mapSize.width = 512 * 4;
+    light.shadow.mapSize.height = 512 * 4;
+    scene.add(light);
+    const lightHelper = new THREE.DirectionalLightHelper(light, 5);
+    scene.add(lightHelper);
+
+    light.shadow.camera.updateProjectionMatrix();
+    const lightCameraHelper = new THREE.CameraHelper(light.shadow.camera);
+    scene.add(lightCameraHelper);
+
+    gui
+      .add(lightCameraHelper, 'visible')
+      .name('Light Camera')
+      .onChange(() => {
+        lightCameraHelper.update();
+      });
+
+    const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
+    scene.add(ambientLight);
+  };
 
   const addMesh = (scene: THREE.Scene, count: number) => {
     return new Promise((resolve, reject) => {

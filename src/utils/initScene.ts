@@ -32,7 +32,7 @@ export const initScene = (cb?: Function, updateCb?: Function): void => {
   const frustumSize = 45;
   const aspect = window.innerWidth / window.innerHeight;
   const camera = new THREE.PerspectiveCamera(frustumSize, aspect, 1, 10000);
-  camera.position.set(0, 150 / 13, 500 / 13);
+  camera.position.set(0, 0, 500 / 10);
   camera.lookAt(0, 0, 0);
   camera.updateProjectionMatrix();
 
@@ -55,22 +55,6 @@ export const initScene = (cb?: Function, updateCb?: Function): void => {
     },
     false,
   );
-
-  const light = new THREE.DirectionalLight(0xffffff, 0.2);
-  light.position.set(0, 1000, 0);
-  light.castShadow = true;
-  light.shadow.mapSize.width = 512;
-  light.shadow.mapSize.height = 512;
-  light.shadow.camera.top = 10;
-  light.shadow.camera.bottom = -5;
-  light.shadow.camera.left = -5;
-  light.shadow.camera.right = 10;
-  scene.add(light);
-  const lightHelper = new THREE.DirectionalLightHelper(light, 5);
-  scene.add(lightHelper);
-
-  const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
-  scene.add(ambientLight);
 
   addSkyBox(scene);
 
@@ -126,7 +110,5 @@ export const initScene = (cb?: Function, updateCb?: Function): void => {
     earth,
     camera,
     controls,
-    light,
-    lightHelper,
   });
 };
