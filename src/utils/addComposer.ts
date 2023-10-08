@@ -20,13 +20,13 @@ export const addComposer = (
 
   const bloomPass = new UnrealBloomPass(
     new THREE.Vector2(canvas.offsetWidth, canvas.offsetHeight),
-    1.5,
-    0.4,
-    0.85,
+    1.0,
+    0.0,
+    0.0,
   );
-  bloomPass.threshold = 0;
   bloomPass.strength = 1.0;
   bloomPass.radius = 0.0;
+  bloomPass.threshold = 0.0;
 
   const renderTarget = new THREE.WebGLRenderTarget(
     canvas.offsetWidth,

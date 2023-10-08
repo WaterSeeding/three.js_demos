@@ -1,9 +1,10 @@
 import styles from './index.less';
 import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { GUI } from 'three/addons/libs/lil-gui.module.min.js';
+import * as dat from 'dat.gui';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { initScene } from '@/utils/initScene';
+import DirectionalLight from '@/components/DirectionalLight';
 
 const Demo = () => {
   let sceneRef = useRef<THREE.Scene | any>(null);
@@ -30,7 +31,9 @@ const Demo = () => {
   useEffect(() => {
     if (!isInitScene) {
       setIsInitScene(true);
+      const gui = new dat.GUI();
       initScene(
+        gui,
         ({
           scene,
           earth,
@@ -41,16 +44,22 @@ const Demo = () => {
           earth: THREE.Group;
           camera: THREE.PerspectiveCamera;
           controls: OrbitControls;
-          light: THREE.DirectionalLight;
-          lightHelper: THREE.DirectionalLightHelper;
         }) => {
-          let gui = new GUI();
           sceneRef.current = scene;
           earthRef.current = earth;
           cameraRef.current = camera;
           controlsRef.current = controls;
 
-          addLight(scene, gui);
+          const directionalLight = new DirectionalLight(scene, gui, {
+            visible: true,
+            intensity: 1.0,
+            color: [255, 212.32826374022767, 172.3802553268238, 1],
+            position: {
+              x: -100,
+              y: 150,
+              z: 0,
+            },
+          });
 
           dummyRef.current = new THREE.Object3D();
 
@@ -99,37 +108,6 @@ const Demo = () => {
       );
     }
   }, []);
-
-  const addLight = (scene: THREE.Scene, gui: GUI) => {
-    const light = new THREE.DirectionalLight(0xffffff, 0.2);
-    light.position.set(-100, 100, 100);
-    light.castShadow = true;
-    light.shadow.camera.near = 0.5;
-    light.shadow.camera.far = 200;
-    light.shadow.camera.right = 150;
-    light.shadow.camera.left = -150;
-    light.shadow.camera.top = 150;
-    light.shadow.camera.bottom = -150;
-    light.shadow.mapSize.width = 512 * 4;
-    light.shadow.mapSize.height = 512 * 4;
-    scene.add(light);
-    const lightHelper = new THREE.DirectionalLightHelper(light, 5);
-    scene.add(lightHelper);
-
-    light.shadow.camera.updateProjectionMatrix();
-    const lightCameraHelper = new THREE.CameraHelper(light.shadow.camera);
-    scene.add(lightCameraHelper);
-
-    gui
-      .add(lightCameraHelper, 'visible')
-      .name('Light Camera')
-      .onChange(() => {
-        lightCameraHelper.update();
-      });
-
-    const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
-    scene.add(ambientLight);
-  };
 
   const addMesh = (scene: THREE.Scene, count: number) => {
     return new Promise((resolve, reject) => {

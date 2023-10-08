@@ -4,12 +4,15 @@ specifiers:
   '@ant-design/icons': ^4.7.0
   '@ant-design/pro-components': ^2.0.1
   '@tweenjs/tween.js': ^19.0.0
+  '@types/dat.gui': ^0.7.10
   '@types/react': ^18.0.0
   '@types/react-dom': ^18.0.0
   '@types/three': ^0.150.1
   '@umijs/max': ^4.0.64
   ahooks: ^3.7.7
   antd: ^5.0.0
+  dat.gui: ^0.7.9
+  dexie: ^3.2.4
   husky: ^8.0.1
   lint-staged: ^13.2.0
   prettier: ^2.7.1
@@ -23,9 +26,12 @@ dependencies:
   '@ant-design/icons': 4.8.0
   '@ant-design/pro-components': 2.4.4_antd@5.3.3
   '@tweenjs/tween.js': 19.0.0
+  '@types/dat.gui': 0.7.10
   '@umijs/max': 4.0.64_7iirswgjab5lcu3kt6z76ix6pu
   ahooks: 3.7.7
   antd: 5.3.3
+  dat.gui: 0.7.9
+  dexie: 3.2.4
   three: 0.151.2
   three.meshline: 1.4.0
 
@@ -3403,6 +3409,10 @@ packages:
       '@babel/types': 7.21.4
     dev: false
 
+  /@types/dat.gui/0.7.10:
+    resolution: {integrity: sha512-sLifoNrvs4lgJkAUZcTB28dbWy0AM05Yc0BzTqHheK0tRYRVsJHoFLocB5heDbb5amaFLEXna41GOM6IG06oqA==}
+    dev: false
+
   /@types/graceful-fs/4.1.6:
     resolution: {integrity: sha512-Sig0SNORX9fdW+bQuTEovKj3uHcUL6LQKbCrrqb1X7J6/ReAbhCXRAhc+SMejhLELFj2QcyuxmUooZ4bt5ReSw==}
     dependencies:
@@ -5433,6 +5443,10 @@ packages:
       type: 1.2.0
     dev: false
 
+  /dat.gui/0.7.9:
+    resolution: {integrity: sha512-sCNc1OHobc+Erc1HqiswYgHdVNpSJUlk/Hz8vzOCsER7rl+oF/4+v8GXFUyCgtXpoCX6+bnmg07DedLvBLwYKQ==}
+    dev: false
+
   /data-uri-to-buffer/4.0.1:
     resolution: {integrity: sha512-0R9ikRb668HB7QDxT1vkpuUBtqc53YyAwMwGeUFKRojY/NWKvdZ+9UYtRfGmhqNbRkTSVpMbmyhXipFFv2cb/A==}
     engines: {node: '>= 12'}
@@ -5537,6 +5551,11 @@ packages:
 
   /detect-node/2.1.0:
     resolution: {integrity: sha512-T0NIuQpnTvFDATNuHN5roPwSBG83rFsuO+MXXH9/3N1eFbn4wcPjttvjMLEPWJ0RGUYgQE7cGgS3tNxbqCGM7g==}
+    dev: false
+
+  /dexie/3.2.4:
+    resolution: {integrity: sha512-VKoTQRSv7+RnffpOJ3Dh6ozknBqzWw/F3iqMdsZg958R0AS8AnY9x9d1lbwENr0gzeGJHXKcGhAMRaqys6SxqA==}
+    engines: {node: '>=6.0'}
     dev: false
 
   /diffie-hellman/5.0.3:
