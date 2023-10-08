@@ -1,6 +1,9 @@
 # Three.js 中的如何一次性绘制八千多个网格对象，还能保持渲染性能
 
 > 要一次性绘制这么多网格对象，还能保持 60 帧，关键要借助于 Three.js 中的 InstancedMesh（实例化网格）。
+> 
+> - [查看地址](https://three-js-demos-amber.vercel.app/Webgl_Instancing_Dynamic)
+> - [仓库地址](https://github.com/WaterSeeding/three.js_demos)
 
 ![](./InstancedMesh/1.gif)
 
@@ -138,5 +141,5 @@ instancedMeshRef.current.computeBoundingSphere();
 
 ## 相关资料
 
-- [Cesium](https://cesium.com/)
-- [Cesium Documentation](https://cesium.com/docs/)
+- [Three.js](https://threejs.org/)
+- [webgl_instancing_dynamic](https://threejs.org/examples/#webgl_instancing_dynamic)
